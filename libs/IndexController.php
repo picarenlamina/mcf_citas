@@ -1,8 +1,6 @@
 <?php
 class IndexController
 {
-    public $view;
-    
     function __construct()
     {
         //Creamos una instancia de nuestro mini motor de plantillas
@@ -11,7 +9,7 @@ class IndexController
  
     public function index()
     {
-        header( "Location: index.php?controlador=cita&accion=listado");
+        header( "Location: index.php?controlador=usuario&accion=entrada");
     }
    
 }

@@ -22,7 +22,7 @@ class CitaModel
    
     public function getFecha()
     {
-        return $this->Fecha;
+        return $this->fecha;
     }
     
 	
@@ -36,7 +36,7 @@ class CitaModel
     {
        
         $consulta = $this->db->prepare('SELECT * FROM citas_citas where cita_id = ?');
-        $consulta->bindParam( 1,  $codigo_id );
+        $consulta->bindParam( 1, $codigo );
         $consulta->setFetchMode(PDO::FETCH_CLASS, "CitaModel");
         $consulta->execute();
         $resultado = $consulta->fetch();

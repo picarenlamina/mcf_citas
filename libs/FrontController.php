@@ -42,7 +42,7 @@ class FrontController
               die('El controlador no existe - 404 not found');
  
         //Si no existe la clase que buscamos y su acción, mostramos un error 404
-        if (is_callable(array($controllerName, $actionName)) == false)
+        if (((class_exists( $controllerName ) && method_exists($controllerName, $actionName))) == false ) 
         {
             trigger_error ($controllerName . '->' . $actionName . '` no existe', E_USER_NOTICE);
             return false;
