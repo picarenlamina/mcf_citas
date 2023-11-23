@@ -9,9 +9,9 @@
 <body>
 
 
-Reserva Cita
+Reserva Cita <br>
 
-Dia: <?php echo $cita->getDia()?> <br>
+Dia: <?php echo $cita->getFecha()?> <br>
 Hora: <?php echo $cita->getHora()?> <br>
 
 <form method="get" action="index.php?controlador=cita&action=reserva">
@@ -35,11 +35,11 @@ Hora: <?php echo $cita->getHora()?> <br>
 
 <?php echo isset( $errores[ "email" ] ) ? "*":"" ?>
 <label for="email" >email</label>
-<input type="text" name="email" value="<?php echo isset( $_REQUEST[ 'email'] ) ?$_REQUEST[ 'email'] :"" ?>">
+<input type="text" name="Email" value="<?php echo isset( $_REQUEST[ 'email'] ) ?$_REQUEST[ 'email'] :"" ?>">
 </br>
 
 <?php echo isset( $errores[ "telefono" ] ) ? "*":"" ?>
-<label for="telefono" ><Tr></Tr>elefono</label>
+<label for="telefono" >Telefono</label>
 <input type="text" name="telefono" value="<?php echo isset( $_REQUEST[ 'telefono'] ) ?$_REQUEST[ 'telefono'] :"" ?>">
 </br>
 </br>

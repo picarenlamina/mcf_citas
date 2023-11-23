@@ -28,19 +28,42 @@ class UsuarioModel
         return $this->nombre;
     }
 
-    public function setNombre ( $valor )
+    public function setApellidos ( $valor )
     {
-        $this->nombre = $valor;
+        $this->apellidos  = $valor;
+    }
+    public function getApellidos ()
+    {
+        return $this->apellidos;
     }
 
+    public function setNif ( $valor )
+    {
+        $this->nif  = $valor;
+    }
+    public function getNif ()
+    {
+        return $this->nif;
+    }
+    public function setTelefono ( $valor )
+    {
+        $this->nif  = $telefono;
+    }
+    public function getTelefono ()
+    {
+        return $this->telefono;
+    }
+ 
+ 
 
 
-    public function getByCredenciales( $usuario, $password )
+
+
+    public function getByNif( $codigo )
     {
        
-        $gsent = $this->db->prepare('SELECT * FROM agenda_usuarios where usuario = ? and password = ?');
-        $gsent->bindParam( 1, $usuario ); 
-		$gsent->bindParam( 2, $password );
+        $gsent = $this->db->prepare('SELECT * FROM cita_usuarios where nif = ?');
+        $gsent->bindParam( 1, $codigo ); 
         $gsent->execute();
  
         $gsent->setFetchMode(PDO::FETCH_CLASS, "UsuarioModel");

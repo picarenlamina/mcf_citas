@@ -31,10 +31,11 @@ class CitaController
     {
         
 		require 'models/CitaModel.php';
-		$cita = new CitaModel();
+		$citaModel = new CitaModel();
 		 
-		if( isset( $_REQUEST['cita_id']) && $cita->getById( $_REQUEST[ 'cita_id' ] ) )
-			$_SESSION[ "cita_id"] == $_REQUEST['cita_id'];
+		
+		if( isset( $_REQUEST['cita_id']) && $cita = $citaModel->getById( $_REQUEST[ 'cita_id' ] ) )
+			$_SESSION[ "cita_id" ] = $_REQUEST['cita_id'];
 		else
 			$this->view->show("errorView.php", array( "error" =>"No existe codigo", "enlace" => "index.php"));
 		
@@ -45,37 +46,40 @@ class CitaController
         {
             $errores = array();
                 
-			if(empty($_REQUEST["evento"])){
-					$errores['evento'] = "* Evento: Error";
+			if(empty($_REQUEST["nombre"])){
+					$errores['nombre'] = "* Nombre: Error";
 			}
-			if(empty($_REQUEST["ubicacion"])){
-					$errores['ubicacion'] = "* Ubicacion: Error";
+			if(empty($_REQUEST["apellidos"])){
+					$errores['apellidos'] = "* Apellidos: Error";
 			}
-			if(empty($_REQUEST["fecha"]) || ! validateDate($_REQUEST["fecha"])){
-					$errores['fecha'] = "* Fecha: Error YYYY-MM-DD";
+			if(empty($_REQUEST["telefono"]) || ! validateTelefono($_REQUEST["telefono"])){
+					$errores['telefono'] = "* Telefono: Error";
 			}
-			if(empty($_REQUEST["hora"]) || ! validateTime($_REQUEST["hora"])){
-					$errores['hora'] = "* Hora: Error HH:MM";
-			}
-			$categoria = new CategoriaModel();
-			if(empty($_REQUEST["categoria_id"]) || ! $categoria->getById( $_REQUEST["categoria_id"])){
-					$errores['categoria_id'] = "* Categoria: Error";
+			if(empty($_REQUEST["email"]) || ! validateEmail($_REQUEST["email"])){
+					$errores['email'] = "* Email: Error ";
 			}
 			
-			$entidad = new EntidadModel();
-			if(empty($_REQUEST["entidad_id"]) || ! $entidad->getById( $_REQUEST["entidad_id"])){
-					$errores['entidad_id'] = "* Entidad: Error";
-			}
 				
 			if( empty($errores) )
 			{     
-				$evento->setEvento( $_REQUEST[ 'evento' ]);
-				$evento->setUbicacion( $_REQUEST[ 'ubicacion' ]);
-				$evento->setHora( $_REQUEST[ 'hora' ]);
-				$evento->setFecha( $_REQUEST[ 'fecha' ]);
-				$evento->setCategoria_id( $_REQUEST[ 'categoria_id' ]);
-				$evento->setEntidad_id( $_REQUEST[ 'entidad_id' ]);
-				$evento->save();
+				$usuarioModel = new UsuarioModel();
+
+				if( ! $usuario = $usuarioModel->getByNif( $_REQUEST[ 'email' ] ) )
+					$usuario  = new UsuarioModel();
+
+				$usuario->setNombre( $_REQUEST[ 'nombre' ]);
+				$usuario->setApellidos( $_REQUEST[ 'apellidos' ]);
+				$usuario->setTelefono( $_REQUEST[ 'telefono' ]);
+				$usuario->setEmail( $_REQUEST[ 'email' ]);
+				$usuario->setNif( $_REQUEST[ 'nif' ]);
+				
+				$usuario->save();
+				
+				$reserva = new Reserva();
+				$reserva->setCita_id( $_SESSION[ "cita_id"] );
+				$reserva->setUsuario_id( $usuario->getUsuario_id() );
+
+				$reservao->save();
 				header( "Location: index.php?controlador=evento&accion=listar");
 			}
             else{ 
