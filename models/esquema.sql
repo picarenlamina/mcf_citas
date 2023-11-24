@@ -1,6 +1,7 @@
+DROP TABLE IF EXISTS citas_reservas;
 DROP TABLE IF EXISTS citas_usuarios;
 DROP TABLE IF EXISTS citas_citas;
-DROP TABLE IF EXISTS citas_reservas;
+
 
 
 create table citas_citas(
@@ -14,7 +15,8 @@ usuario_id integer primary key AUTO_INCREMENT,
 nif varchar( 100 ),
 nombre varchar( 100 ),
 apellidos varchar( 100 ),
-telefono varchar(100)
+telefono varchar(100),
+email varchar(100)
 );
 
 

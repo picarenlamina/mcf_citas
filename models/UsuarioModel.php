@@ -28,6 +28,10 @@ class UsuarioModel
         return $this->nombre;
     }
 
+    public function setNombre ( $valor )
+    {
+        $this->nombre  = $valor;
+    }
     public function setApellidos ( $valor )
     {
         $this->apellidos  = $valor;
@@ -47,13 +51,16 @@ class UsuarioModel
     }
     public function setTelefono ( $valor )
     {
-        $this->nif  = $telefono;
+        $this->nif  = $valor;
     }
     public function getTelefono ()
     {
         return $this->telefono;
     }
- 
+    public function setEmail ( $valor )
+    {
+        $this->email  = $valor;
+    }
  
 
 

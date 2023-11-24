@@ -18,7 +18,6 @@ Hora: <?php echo $cita->getHora()?> <br>
 <input type="hidden" name="controlador" value="cita">
 <input type="hidden" name="accion" value="reservar">
 
-
 <?php echo isset( $errores[ "nif" ] ) ? "*":"" ?>
 <label for="nif" >NIF</label>
 <input type="text" name="nif" value="<?php echo isset( $_REQUEST[ 'nif'] ) ?$_REQUEST[ 'nif'] :"" ?>">
@@ -35,7 +34,7 @@ Hora: <?php echo $cita->getHora()?> <br>
 
 <?php echo isset( $errores[ "email" ] ) ? "*":"" ?>
 <label for="email" >email</label>
-<input type="text" name="Email" value="<?php echo isset( $_REQUEST[ 'email'] ) ?$_REQUEST[ 'email'] :"" ?>">
+<input type="text" name="email" value="<?php echo isset( $_REQUEST[ 'email'] ) ?$_REQUEST[ 'email'] :"" ?>">
 </br>
 
 <?php echo isset( $errores[ "telefono" ] ) ? "*":"" ?>
