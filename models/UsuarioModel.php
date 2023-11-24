@@ -69,7 +69,7 @@ class UsuarioModel
     public function getByNif( $codigo )
     {
        
-        $gsent = $this->db->prepare('SELECT * FROM cita_usuarios where nif = ?');
+        $gsent = $this->db->prepare('SELECT * FROM citas_usuarios where nif = ?');
         $gsent->bindParam( 1, $codigo ); 
         $gsent->execute();
  

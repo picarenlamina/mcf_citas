@@ -79,9 +79,13 @@ class CitaController
 				
 				$usuarioModel = new UsuarioModel();
 				$usuario = $usuarioModel->getByNif( $_REQUEST[ 'nif' ] );
-				if( ! $usuario  )
-					$usuario  = new UsuarioModel();
 				
+				if( ! $usuario  )
+				{
+					
+					$usuario  = new UsuarioModel();
+					
+				}	
 
 				$usuario->setNombre( $_REQUEST[ 'nombre' ]);
 				$usuario->setApellidos( $_REQUEST[ 'apellidos' ]);
