@@ -98,7 +98,7 @@ class UsuarioModel
         }
         else
         {
-            $consulta = $this->db->prepare('UPDATE citas_usuarios SET nif = ?, nombre = ?, apellidos = ?, telefono = ? WHERE citas_usuarios.usuario_id = ?');
+            $consulta = $this->db->prepare('UPDATE citas_usuarios SET nif = ?, nombre = ?, apellidos = ?, telefono = ? , email = ? WHERE citas_usuarios.usuario_id = ?');
             
             $consulta->bindParam( 1,  $this->nif );
             $consulta->bindParam( 2,  $this->nombre );
