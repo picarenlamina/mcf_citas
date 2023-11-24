@@ -14,9 +14,9 @@ Reserva Cita <br>
 Dia: <?php echo $cita->getFecha()?> <br>
 Hora: <?php echo $cita->getHora()?> <br>
 
-<form method="get" action="index.php?controlador=cita&action=reserva">
+<form method="get" action="index.php?controlador=cita&action=reservar">
 <input type="hidden" name="controlador" value="cita">
-<input type="hidden" name="accion" value="reserva">
+<input type="hidden" name="accion" value="reservar">
 
 
 <?php echo isset( $errores[ "nif" ] ) ? "*":"" ?>

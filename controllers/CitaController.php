@@ -32,10 +32,14 @@ class CitaController
         
 		require 'models/CitaModel.php';
 		$citaModel = new CitaModel();
-		 
+		$cita = $citaModel->getById( $_REQUEST[ 'cita_id' ] );
 		
-		if( isset( $_REQUEST['cita_id']) && $cita = $citaModel->getById( $_REQUEST[ 'cita_id' ] ) )
+		//if( isset( $_REQUEST['cita_id']) && $cita = $citaModel->getById( $_REQUEST[ 'cita_id' ] ) )
+		if( isset( $_REQUEST['cita_id'])  ) 
+		
+		{
 			$_SESSION[ "cita_id" ] = $_REQUEST['cita_id'];
+		}	
 		else
 			$this->view->show("errorView.php", array( "error" =>"No existe codigo", "enlace" => "index.php"));
 		

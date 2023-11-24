@@ -73,7 +73,40 @@ class UsuarioModel
         return $resultado;
     }
     
+    public function save()
+    {
+        
+        if( ! isset( $this->usuario_id ) )
+        {
+            $consulta = $this->db->prepare('INSERT INTO citas_usuarios (nif, nombre, apellidos, telefono, email ) VALUES (?,?,?,?,?)');
+            
+            $consulta->bindParam( 1,  $this->nif );
+            $consulta->bindParam( 2,  $this->nombre );
+            $consulta->bindParam( 3,  $this->apellidos );
+            $consulta->bindParam( 4,  $this->telefono );
+            $consulta->bindParam( 5,  $this->email );
+            
+            $resultado = $consulta->execute();
+            $this->usuario_id = $this->db->lastInsertId();
+        }
+        else
+        {
+            $consulta = $this->db->prepare('UPDATE citas_usuarios SET nif = ?, nombre = ?, apellidos = ?, telefono = ? WHERE citas_usuarios.usuario_id = ?');
+            
+            $consulta->bindParam( 1,  $this->nif );
+            $consulta->bindParam( 2,  $this->nombre );
+            $consulta->bindParam( 3,  $this->apellidos );
+            $consulta->bindParam( 4,  $this->telefono );
+            $consulta->bindParam( 5,  $this->email );
+            
+            $consulta->bindParam( 6,  $this->usuario_id );
+            
+            $resultado = $consulta->execute();
+        }
+        
+        return $resultado;
+    }
     
- 
+     
 }
 ?>
