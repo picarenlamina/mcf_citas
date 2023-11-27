@@ -36,16 +36,20 @@ class CitaController
 		{
 			$citaModel = new CitaModel();
 			$cita = $citaModel->getById( $_REQUEST[ 'cita_id' ] );
-			if ( ! $cita )
-				$this->view->show("errorView.php", array( "error" =>"No existe codigo", "enlace" => "index.php"));
+			$libre = $citaModel->isLibre( $_REQUEST[ 'cita_id' ] );
+			if ( ! $cita && ! $libre )
+				$this->view->show("errorView.php", array( "error" =>"Error Sistema 1", "enlace" => "index.php"));
 			else 
 				$_SESSION[ "cita_id" ] = $_REQUEST['cita_id'];
 		}
-		else
+		elseif ( $_SESSION[ "cita_id" ]  )
 		{
 			$citaModel = new CitaModel();
 			$cita = $citaModel->getById( $_SESSION[ "cita_id" ]  );
 		}
+		else
+			$this->view->show("errorView.php", array( "error" =>"Error Sistema 2", "enlace" => "index.php"));
+
 
         if( isset( $_REQUEST["submit"] )&& $_REQUEST["submit"] == "Aceptar" )
         {
@@ -66,10 +70,10 @@ class CitaController
 */
 			if(empty($_REQUEST["telefono"]) ){
 				$errores['telefono'] = "* Telefono: Error";
-		}
-		if(empty($_REQUEST["email"]) ){
-				$errores['email'] = "* Email: Error ";
-		}
+			}
+			if(empty($_REQUEST["email"]) ){
+					$errores['email'] = "* Email: Error ";
+			}
 			
 				
 			if( empty($errores) )
@@ -80,6 +84,8 @@ class CitaController
 				$usuarioModel = new UsuarioModel();
 				$usuario = $usuarioModel->getByNif( $_REQUEST[ 'nif' ] );
 				
+				var_dump( $usuario );
+
 				if( ! $usuario  )
 				{
 					
