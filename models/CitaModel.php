@@ -56,16 +56,16 @@ class CitaModel
     {
 
         $consulta = $this->db->prepare('select cita_id from citas_reservas where cita_id = ?');
-
-        $consulta->setFetchMode(PDO::FETCH_CLASS, "CitaModel");
-        $consulta->execute();
         $consulta->bindParam(1, $codigo);
+        $consulta->execute();
+        $consulta->setFetchMode(PDO::FETCH_CLASS, "CitaModel");
+      
         $resultado = $consulta->fetch();
        
         if ($resultado) {
-            return true;
-        } else {
             return false;
+        } else {
+            return true;
         }
 
     }

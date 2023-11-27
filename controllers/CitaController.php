@@ -31,25 +31,39 @@ class CitaController
         
 		require 'models/CitaModel.php';
 		require 'libs/libreria.php';
+		require 'libs/Mailer.php';
 
 		if( isset( $_REQUEST[ 'cita_id' ]) )
 		{
 			$citaModel = new CitaModel();
 			$cita = $citaModel->getById( $_REQUEST[ 'cita_id' ] );
 			$libre = $citaModel->isLibre( $_REQUEST[ 'cita_id' ] );
-			if ( ! $cita && ! $libre )
+			
+			if ( ! ( $cita && $libre ) )
+			{	
 				$this->view->show("errorView.php", array( "error" =>"Error Sistema 1", "enlace" => "index.php"));
+				exit(0);
+			}
 			else 
 				$_SESSION[ "cita_id" ] = $_REQUEST['cita_id'];
 		}
-		elseif ( $_SESSION[ "cita_id" ]  )
+		elseif( isset( $_SESSION[ "cita_id" ]))
 		{
 			$citaModel = new CitaModel();
 			$cita = $citaModel->getById( $_SESSION[ "cita_id" ]  );
+			$libre = $citaModel->isLibre( $_SESSION[ "cita_id" ] );
+			if ( ! ( $cita && $libre ) )
+			{	
+				$this->view->show("errorView.php", array( "error" =>"Error Sistema 2", "enlace" => "index.php"));
+				exit(0);
+			}
 		}
-		else
-			$this->view->show("errorView.php", array( "error" =>"Error Sistema 2", "enlace" => "index.php"));
-
+		else // 
+		{
+			$this->view->show("errorView.php", array( "error" =>"Error Sistema 3", "enlace" => "index.php"));
+			exit(0);
+		}
+		
 
         if( isset( $_REQUEST["submit"] )&& $_REQUEST["submit"] == "Aceptar" )
         {
@@ -84,7 +98,7 @@ class CitaController
 				$usuarioModel = new UsuarioModel();
 				$usuario = $usuarioModel->getByNif( $_REQUEST[ 'nif' ] );
 				
-				var_dump( $usuario );
+			
 
 				if( ! $usuario  )
 				{
@@ -109,7 +123,19 @@ class CitaController
 
 				session_unset();
 				$this->view->show("msgView.php", array( "msg" =>"Su cita ha sido registrada", "enlace" => "index.php"));
-		
+				
+				// Envio de correo
+				$mailer = new Mailer(  $_REQUEST[ 'email' ], $cita->getFecha(), $cita->getHora());
+				$mailer->send();
+				
+				if(!$mailer->Send()) 
+				{
+					echo "Erreror: " . $mailer->ErrorInfo;
+				}
+				else 
+				{
+					echo "¡Mensaje enviado!";
+				}
 			}
             else{ 
 				$this->view->show("cita/reservaView.php", array( "cita" => $cita,  "errores"=>$errores ));
